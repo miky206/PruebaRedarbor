@@ -1,0 +1,138 @@
+﻿
+@model testRA.Models.Candidates
+
+@{
+    ViewData["Title"] = "Edit Candidates";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Candidates</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdCandidate" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthdate" class="control-label"></label>
+                <input type="date" asp-for="Birthdate" class="form-control" />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <hr />
+            @{ 
+                if (Model.CandidateExperiences != null)
+                {
+                    <h4>Experience</h4>
+                    <hr />
+                    <label>
+                        <a asp-action="CreateWithCandidate" asp-controller="CandidateExperiences" asp-route-id="@Model.IdCandidate">Add Experience</a>
+                    </label>
+                    <table class="table" id= "experience">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].Company)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].Job)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].Description)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].Salary)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].BeginDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].EndDate)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var i = 0; i < Model.CandidateExperiences.Count(); i++)
+                            {
+                                <tr class="rowcount">
+                                    @Html.HiddenFor(x=> Model.CandidateExperiences[i].IdCandidateExperience)
+                                    @Html.HiddenFor(x=>  Model.CandidateExperiences[i].IdCandidate)
+                                    <td >
+                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].Company)
+                                    </td>
+                                    <td >
+                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].Job)
+                                    </td>
+                                    <td >
+                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].Description)
+                                    </td>
+                                    <td >
+                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].Salary)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].BeginDate)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].EndDate)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Delete" asp-controller="CandidateExperiences" asp-route-id="@Model.CandidateExperiences[i].IdCandidateExperience">Delete</a>
+                                    </td>
+                                    
+                                </tr>
+                            }
+                       
+                        </tbody>
+                    </table>
+                }
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $.validator.methods.date = function dateIsValid(dateStr) {
+            const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+
+            if (dateStr.match(regex) === null) {
+                return false;
+            }
+
+            const [day, month, year] = dateStr.split('/');
+            const isoFormattedStr = `${year}-${month}-${day}`;
+            const date = new Date(isoFormattedStr);
+            const timestamp = date.getTime();
+
+            if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) {
+                return false;
+            }
+
+            return date.toISOString().startsWith(isoFormattedStr);
+        };
+       
+    </script>
+}

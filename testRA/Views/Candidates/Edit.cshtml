@@ -1,5 +1,4 @@
-﻿
-@model testRA.Models.Candidates
+﻿@model testRA.WebApp.Models.ViewModels.CandidatesViewModel
 
 @{
     ViewData["Title"] = "Edit Candidates";
@@ -34,9 +33,14 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="InsertDate" class="control-label"></label>
+                <input asp-for="InsertDate" class="form-control" />
+                <span asp-validation-for="InsertDate" class="text-danger"></span>
+            </div>
             <hr />
-            @{ 
-                if (Model.CandidateExperiences != null)
+            @{
+                if (Model.ListCandidateExperiences != null)
                 {
                     <h4>Experience</h4>
                     <hr />
@@ -47,51 +51,51 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].Company)
+                                    @Html.DisplayNameFor(model => model.ListCandidateExperiences[0].Company)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].Job)
+                                    @Html.DisplayNameFor(model => model.ListCandidateExperiences[0].Job)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].Description)
+                                    @Html.DisplayNameFor(model => model.ListCandidateExperiences[0].Description)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].Salary)
+                                    @Html.DisplayNameFor(model => model.ListCandidateExperiences[0].Salary)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].BeginDate)
+                                    @Html.DisplayNameFor(model => model.ListCandidateExperiences[0].BeginDate)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.CandidateExperiences[0].EndDate)
+                                    @Html.DisplayNameFor(model => model.ListCandidateExperiences[0].EndDate)
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for (var i = 0; i < Model.CandidateExperiences.Count(); i++)
+                            @for (var i = 0; i < Model.ListCandidateExperiences.Count(); i++)
                             {
                                 <tr class="rowcount">
-                                    @Html.HiddenFor(x=> Model.CandidateExperiences[i].IdCandidateExperience)
-                                    @Html.HiddenFor(x=>  Model.CandidateExperiences[i].IdCandidate)
+                                    @Html.HiddenFor(x=> Model.ListCandidateExperiences[i].IdCandidateExperience)
+                                    @Html.HiddenFor(x=>  Model.ListCandidateExperiences[i].IdCandidate)
                                     <td >
-                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].Company)
+                                        @Html.TextBoxFor(x=>  Model.ListCandidateExperiences[i].Company)
                                     </td>
                                     <td >
-                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].Job)
+                                        @Html.TextBoxFor(x=>  Model.ListCandidateExperiences[i].Job)
                                     </td>
                                     <td >
-                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].Description)
+                                        @Html.TextBoxFor(x=>  Model.ListCandidateExperiences[i].Description)
                                     </td>
                                     <td >
-                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].Salary)
+                                        @Html.TextBoxFor(x=>  Model.ListCandidateExperiences[i].Salary)
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].BeginDate)
+                                        @Html.TextBoxFor(x=>  Model.ListCandidateExperiences[i].BeginDate)
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(x=>  Model.CandidateExperiences[i].EndDate)
+                                        @Html.TextBoxFor(x=>  Model.ListCandidateExperiences[i].EndDate)
                                     </td>
                                     <td>
-                                        <a asp-action="Delete" asp-controller="CandidateExperiences" asp-route-id="@Model.CandidateExperiences[i].IdCandidateExperience">Delete</a>
+                                        <a asp-action="Delete" asp-controller="CandidateExperiences" asp-route-id="@Model.ListCandidateExperiences[i].IdCandidateExperience">Delete</a>
                                     </td>
                                     
                                 </tr>

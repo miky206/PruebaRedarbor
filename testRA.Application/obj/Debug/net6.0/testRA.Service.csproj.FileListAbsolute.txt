@@ -1,0 +1,17 @@
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\bin\Debug\net6.0\testRA.Service.deps.json
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\bin\Debug\net6.0\testRA.Service.dll
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\bin\Debug\net6.0\testRA.Service.pdb
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\bin\Debug\net6.0\testRA.Domain.dll
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\bin\Debug\net6.0\testRA.Infrastructure.dll
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\bin\Debug\net6.0\testRA.Domain.pdb
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\bin\Debug\net6.0\testRA.Infrastructure.pdb
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\testRA.Service.csproj.AssemblyReference.cache
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\testRA.Service.GeneratedMSBuildEditorConfig.editorconfig
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\testRA.Service.AssemblyInfoInputs.cache
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\testRA.Service.AssemblyInfo.cs
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\testRA.Service.csproj.CoreCompileInputs.cache
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\testRA.Service.csproj.CopyComplete
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\testRA.Service.dll
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\refint\testRA.Service.dll
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\testRA.Service.pdb
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Application\obj\Debug\net6.0\ref\testRA.Service.dll

@@ -1,126 +1,136 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using testRA.Data;
-using testRA.Models;
+using testRA.Domain.Entities;
+using testRA.Service.Interfaces;
+using testRA.WebApp.Models.ViewModels;
 
-namespace testRA.Controllers
+namespace testRA.WebApp.Controllers
 {
     public class CandidateExperiencesController : Controller
     {
-        private readonly TestRedarborContext _context;
-
-        public CandidateExperiencesController(TestRedarborContext context)
+        private readonly ICandidateExperienceService _candidateExperienceService;
+        private readonly ICandidateService _candidateService;
+        private readonly IMapper _mapper;
+        public CandidateExperiencesController(ICandidateExperienceService candidateExperienceService, IMapper mapper, ICandidateService candidateService)
         {
-            _context = context;
+            _candidateExperienceService = candidateExperienceService ?? throw new System.ArgumentNullException(nameof(candidateExperienceService));
+            _mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
+            _candidateService = candidateService ?? throw new System.ArgumentNullException(nameof(candidateService));
         }
 
         // GET: CandidateExperiences
         public async Task<IActionResult> Index()
         {
-            var testRAContext = _context.CandidateExperience.Include(c => c.Candidates);
-            return View(await testRAContext.ToListAsync());
+            IList<CandidateExperience> queryCandidatesExperience = await _candidateExperienceService.GetAll();
+            if (queryCandidatesExperience != null)
+            {
+                var listCandidateExperience = _mapper.Map<List<CandidateExperienceViewModel>>(queryCandidatesExperience);
+                return View(listCandidateExperience);
+            }
+            return Problem("Entity set 'Candidates Experience' is null.");
         }
 
         // GET: CandidateExperiences/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.CandidateExperience == null)
+            var responsecandidateExperience = await _candidateExperienceService.GetById(id??0);
+            if (responsecandidateExperience == null)
                 return NotFound();
 
-            var candidateExperience = await _context.CandidateExperience
-                .Include(c => c.Candidates)
-                .FirstOrDefaultAsync(m => m.IdCandidateExperience == id);
-            if (candidateExperience == null)
-                return NotFound();
-
+            var candidateExperience = _mapper.Map<CandidateExperienceViewModel>(responsecandidateExperience);
+            candidateExperience.Candidates = await GetCandidate(candidateExperience.IdCandidate);
             return View(candidateExperience);
         }
 
-        // GET: CandidateExperiences/Create
-        public IActionResult Create()
+        //// GET: CandidateExperiences/Create
+        public async Task<IActionResult> Create()
         {
-            ViewData["IdCandidate"] = new SelectList(_context.Candidates, "IdCandidate", "Name");
+            ViewData["IdCandidate"] = new SelectList(await _candidateService.GetAll(), "IdCandidate", "Name");
             return View();
         }
-        public IActionResult CreateWithCandidate(int id)
+        public async Task<IActionResult> CreateWithCandidate(int id)
         {
-           ViewData["IdCandidate"] = new SelectList(_context.Candidates.Where(x => x.IdCandidate == id), "IdCandidate", "Name");
-           return View();
+            List<Candidates> listSelectList = new List<Candidates>();
+            listSelectList.Add(await _candidateService.GetById(id));
+            ViewData["IdCandidate"] = new SelectList(listSelectList, "IdCandidate", "Name");
+            return View();
         }
 
         // POST: CandidateExperiences/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCandidateExperience,IdCandidate,Company,Job,Description,Salary,BeginDate,EndDate,InsertDate,ModifyDate")] CandidateExperience candidateExperience)
+        public async Task<IActionResult> Create([Bind("IdCandidateExperience,IdCandidate,Company,Job,Description,Salary,BeginDate,EndDate,InsertDate,ModifyDate")] CandidateExperienceViewModel candidateExperience)
         {
-            candidateExperience.InsertDate = DateTime.Now.Date;
             if (ModelState.IsValid)
             {
-                _context.Add(candidateExperience);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                CandidateExperience newCandidateExperience = new CandidateExperience(
+                    candidateExperience.IdCandidateExperience,
+                    candidateExperience.IdCandidate,
+                    candidateExperience.Company,
+                    candidateExperience.Job,
+                    candidateExperience.Description,
+                    candidateExperience.Salary,
+                    candidateExperience.BeginDate,
+                    candidateExperience.EndDate,
+                    DateTime.Now,
+                    null
+                    );
+                return (await _candidateExperienceService.Insert(newCandidateExperience))?
+                RedirectToAction(nameof(Index)) : Problem("Entity insert 'testRAContext.CandidateExperience' is null.");
             }
-            ViewData["IdCandidate"] = new SelectList(_context.Candidates, "IdCandidate", "Name", candidateExperience.IdCandidate);
+            ViewData["IdCandidate"] = new SelectList(await _candidateService.GetAll(), "IdCandidate", "Name", candidateExperience.IdCandidate);
             return View(candidateExperience);
         }
 
         // GET: CandidateExperiences/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.CandidateExperience == null)
-                return NotFound();
-
-            var candidateExperience = await _context.CandidateExperience.FindAsync(id);
+            var candidateExperience = await _candidateExperienceService.GetById(id??0);
             if (candidateExperience == null)
                 return NotFound();
 
-            ViewData["IdCandidate"] = new SelectList(_context.Candidates, "IdCandidate", "Name", candidateExperience.IdCandidate);
-            return View(candidateExperience);
+            ViewData["IdCandidate"] = new SelectList(await _candidateService.GetAll(), "IdCandidate", "Name", candidateExperience.IdCandidate);
+            return View(_mapper.Map<CandidateExperienceViewModel>(candidateExperience));
         }
 
         // POST: CandidateExperiences/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCandidateExperience,IdCandidate,Company,Job,Description,Salary,BeginDate,EndDate,InsertDate,ModifyDate")] CandidateExperience candidateExperience)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCandidateExperience,IdCandidate,Company,Job,Description,Salary,BeginDate,EndDate,InsertDate,ModifyDate")] CandidateExperienceViewModel candidateExperience)
         {
             if (id != candidateExperience.IdCandidateExperience)
                 return NotFound();
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    candidateExperience.ModifyDate = DateTime.Now;
-                    _context.Update(candidateExperience);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CandidateExperienceExists(candidateExperience.IdCandidateExperience))
-                        return NotFound();
-                    else
-                        throw;
-                }
+                CandidateExperience newCandidateExperience = new CandidateExperience(
+                    candidateExperience.IdCandidateExperience,
+                    candidateExperience.IdCandidate,
+                    candidateExperience.Company,
+                    candidateExperience.Job,
+                    candidateExperience.Description,
+                    candidateExperience.Salary,
+                    candidateExperience.BeginDate,
+                    candidateExperience.EndDate,
+                    candidateExperience.InsertDate,
+                    DateTime.Now
+                    );
+                await _candidateExperienceService.Update(newCandidateExperience);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCandidate"] = new SelectList(_context.Candidates, "IdCandidate", "IdCandidate", candidateExperience.IdCandidate);
+            ViewData["IdCandidate"] = new SelectList(await _candidateService.GetAll(), "IdCandidate", "IdCandidate", candidateExperience.IdCandidate);
             return View(candidateExperience);
         }
 
         // GET: CandidateExperiences/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.CandidateExperience == null)
-                return NotFound();
-
-            var candidateExperience = await _context.CandidateExperience
-                .Include(c => c.Candidates)
-                .FirstOrDefaultAsync(m => m.IdCandidateExperience == id);
+            var candidateExperience = await _candidateExperienceService.GetById(id ?? 0);
             if (candidateExperience == null)
                 return NotFound();
 
-            return View(candidateExperience);
+            return View(_mapper.Map<CandidateExperienceViewModel>(candidateExperience));
         }
 
         // POST: CandidateExperiences/Delete/5
@@ -128,20 +138,25 @@ namespace testRA.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.CandidateExperience == null)
+            var response = await _candidateExperienceService.Delete(id);
+            if (response)
+                return RedirectToAction(nameof(Index));
+            else
                 return Problem("Entity set 'testRAContext.CandidateExperience' is null.");
-
-            var candidateExperience = await _context.CandidateExperience.FindAsync(id);
-            if (candidateExperience != null)
-                _context.CandidateExperience.Remove(candidateExperience);
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
-        private bool CandidateExperienceExists(int id)
+        #region Private Method
+
+        private async Task<CandidatesViewModel> GetCandidate(int idCandidate)
         {
-            return (_context.CandidateExperience?.Any(e => e.IdCandidateExperience == id)).GetValueOrDefault();
+            var responseCandidate = await _candidateService.GetById(idCandidate);
+            if (responseCandidate == null)
+                return new CandidatesViewModel();
+            return _mapper.Map<CandidatesViewModel>(responseCandidate);
         }
+
+        #endregion
+
+       
     }
 }

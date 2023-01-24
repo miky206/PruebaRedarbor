@@ -1,0 +1,14 @@
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\bin\Debug\net6.0\testRA.Domain.deps.json
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\bin\Debug\net6.0\testRA.Domain.runtimeconfig.json
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\bin\Debug\net6.0\testRA.Domain.dll
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\bin\Debug\net6.0\testRA.Domain.pdb
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\testRA.Domain.csproj.AssemblyReference.cache
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\testRA.Domain.GeneratedMSBuildEditorConfig.editorconfig
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\testRA.Domain.AssemblyInfoInputs.cache
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\testRA.Domain.AssemblyInfo.cs
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\testRA.Domain.csproj.CoreCompileInputs.cache
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\testRA.Domain.dll
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\refint\testRA.Domain.dll
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\testRA.Domain.pdb
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\testRA.Domain.genruntimeconfig.cache
+\\Mac\Home\Documents\Work\PruebaRedarbor\testRA.Domain\obj\Debug\net6.0\ref\testRA.Domain.dll

@@ -1,15 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System.Globalization;
-using testRA.Controllers;
-using testRA.Data;
+using testRA.Domain.Entities;
+using testRA.Infrastructure.Contexts;
+using testRA.Infrastructure.Repositories;
+using testRA.Service.Interfaces;
+using testRA.Service.Service;
+
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<TestRedarborContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("testRAContext") ?? throw new InvalidOperationException("Connection string 'testRAContext' not found.")));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDbContext<TestRedarborContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CadenaSQL")
+    ?? throw new InvalidOperationException("Connection string 'testRAContext' not found.")));
+builder.Services.AddScoped<IGenericRespository<Candidates>, CandidatesRespository>();
+builder.Services.AddScoped<ICandidateService,CandidateService>();
+builder.Services.AddScoped<IGenericRespository<CandidateExperience>, CandidateExperiencesRespository>();
+builder.Services.AddScoped<ICandidateExperienceService, CandidateExperienceService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

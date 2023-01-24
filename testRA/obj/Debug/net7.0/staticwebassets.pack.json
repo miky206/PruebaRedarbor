@@ -1,8 +1,8 @@
 {
   "Files": [
     {
-      "Id": "\\\\Mac\\Home\\Documents\\Work\\PruebaRedarbor\\testRA\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\testRA.bundle.scp.css",
-      "PackagePath": "staticwebassets\\testRA.bundle.scp.css"
+      "Id": "\\\\Mac\\Home\\Documents\\Work\\PruebaRedarbor\\testRA\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\testRA.WebApp.bundle.scp.css",
+      "PackagePath": "staticwebassets\\testRA.WebApp.bundle.scp.css"
     },
     {
       "Id": "\\\\Mac\\Home\\Documents\\Work\\PruebaRedarbor\\testRA\\wwwroot\\css\\site.css",
@@ -253,19 +253,19 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.testRA.props",
-      "PackagePath": "build\\testRA.props"
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.testRA.WebApp.props",
+      "PackagePath": "build\\testRA.WebApp.props"
     },
     {
-      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.testRA.props",
-      "PackagePath": "buildMultiTargeting\\testRA.props"
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.testRA.WebApp.props",
+      "PackagePath": "buildMultiTargeting\\testRA.WebApp.props"
     },
     {
-      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.testRA.props",
-      "PackagePath": "buildTransitive\\testRA.props"
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.testRA.WebApp.props",
+      "PackagePath": "buildTransitive\\testRA.WebApp.props"
     },
     {
-      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.testRA.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.testRA.WebApp.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     }
   ],

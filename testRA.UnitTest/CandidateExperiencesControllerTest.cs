@@ -96,6 +96,109 @@ namespace testRA.UnitTest
             Assert.Equal("CandidateExperiences", redirectToActionResult.ControllerName);
             Assert.Equal("Index", redirectToActionResult.ActionName);
         }
+        [Fact]
+        public async Task Create_With_InvalidModel()
+        {
+            // Arrange
+            var candidatesList = GetListCandidates();
+            var candidateExperienceList = GetListCandidateExperience();
+            candidateService.Setup(x => x.GetAll())
+                            .Returns(candidatesList);
+            candidateExperienceService.Setup(x => x.GetAll())
+                           .Returns(candidateExperienceList);
+            var candidateExperiencesController = new CandidateExperiencesController(candidateExperienceService.Object, _mapper, candidateService.Object);
+            candidateExperiencesController.ModelState.AddModelError("error", "some error");
+            var exampleCandidateExperience = new CandidateExperienceViewModel()
+            {
+                IdCandidateExperience = 1,
+                IdCandidate = 1,
+                Company = null,
+                Job = null,
+                Description = null,
+                BeginDate = DateTime.Now,
+                EndDate = null
+            };
+            // Act
+            var result = await candidateExperiencesController.Create(candidateExperience: exampleCandidateExperience);
+
+            // Assert
+            Assert.IsType<ViewResult>(result);
+        }
+        [Fact]
+        public void Create_ModelStateValid_CreateCandidateExperienceCalledOnce()
+        {
+            // Arrange
+            CandidateExperience? candidateExperience = null;
+            candidateExperienceService.Setup(r => r.Insert(It.IsAny<CandidateExperience>()))
+                .Callback<CandidateExperience>(x => candidateExperience = x);
+            var newCandidateExperience = new CandidateExperienceViewModel()
+            {
+
+                IdCandidateExperience = 10,
+                IdCandidate = 12,
+                Company = "Prueba",
+                Job = "Prueba",
+                Description = "Prueba",
+                BeginDate = DateTime.Now,
+                EndDate = null
+            };
+
+            //Act
+            var candidateExperiencesController = new CandidateExperiencesController(candidateExperienceService.Object, _mapper, candidateService.Object);
+            candidateExperiencesController.Create(newCandidateExperience);
+
+            //Assert
+            candidateExperienceService.Verify(x => x.Insert(It.IsAny<CandidateExperience>()), Times.Once);
+            Assert.Equal(candidateExperience.Company, newCandidateExperience.Company);
+            Assert.Equal(candidateExperience.Description, newCandidateExperience.Description);
+            Assert.Equal(candidateExperience.Job, newCandidateExperience.Job);
+
+        }
+        [Fact]
+        public void DeleteCandidateExperience_ExistingIdPassed_RemoveOneItem()
+        {
+            //Arrange
+            var id = 1;
+            var candidatesList = GetListCandidates();
+            var candidateExperienceList = GetListCandidateExperience();
+            candidateService.Setup(x => x.GetAll())
+                            .Returns(candidatesList);
+            candidateExperienceService.Setup(x => x.GetAll())
+                           .Returns(candidateExperienceList);
+            //Act
+            var candidateExperiencesController = new CandidateExperiencesController(candidateExperienceService.Object, _mapper, candidateService.Object);
+            var result = candidateExperiencesController.DeleteConfirmed(id).Result;
+            //Assert
+            candidateExperienceService.Verify(x => x.Delete(It.IsAny<int>()), Times.Once);
+        }
+        [Fact]
+        public async Task Create_Ko_With_ValidModel_RedirectToIndex()
+        {
+            // Arrange 
+            var candidatesList = GetListCandidates();
+            var candidateExperienceList = GetListCandidateExperience();
+            candidateService.Setup(x => x.GetAll())
+                            .Returns(candidatesList);
+            candidateExperienceService.Setup(x => x.GetAll())
+                           .Returns(candidateExperienceList);
+            var candidateExperiencesController = new CandidateExperiencesController(candidateExperienceService.Object, _mapper, candidateService.Object);
+            candidateExperiencesController.ModelState.AddModelError("error", "some error");
+            var exampleCandidateExperience = new CandidateExperienceViewModel()
+            {
+                IdCandidateExperience = 1,
+                IdCandidate = 1,
+                Company = "Prueba",
+                Job = "Prueba",
+                Description = "Prueba",
+                BeginDate = DateTime.Now,
+                EndDate = null
+            };
+            // Act
+            var result = await candidateExperiencesController.Create(candidateExperience: exampleCandidateExperience);
+
+            // Assert
+            Assert.IsType<ViewResult>(result);
+        }
         #region Data_Fake
         private Task<IList<Candidates>> GetListCandidates()
         {

@@ -44,7 +44,8 @@ namespace testRA.WebApp.Controllers
                 return View(responseCandidates);
             }
             else
-                return NotFound();
+                return RedirectToAction(actionName: nameof(Index),
+                controllerName: "Candidates");
         }
 
         //GET: Candidates/Create

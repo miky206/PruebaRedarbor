@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using testRA.Domain.Entities;
+﻿using testRA.Domain.Entities;
 using testRA.Infrastructure.Repositories;
 using testRA.Service.Interfaces;
 

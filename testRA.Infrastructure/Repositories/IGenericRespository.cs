@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace testRA.Infrastructure.Repositories
+﻿namespace testRA.Infrastructure.Repositories
 {
     public interface IGenericRespository<TEntityModel> where TEntityModel : class
     {

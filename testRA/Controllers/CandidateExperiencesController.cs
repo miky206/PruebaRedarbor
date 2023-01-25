@@ -36,7 +36,8 @@ namespace testRA.WebApp.Controllers
         {
             var responsecandidateExperience = await _candidateExperienceService.GetById(id??0);
             if (responsecandidateExperience == null)
-                return NotFound();
+                return RedirectToAction(actionName: nameof(Index),
+               controllerName: "CandidateExperiences");
 
             var candidateExperience = _mapper.Map<CandidateExperienceViewModel>(responsecandidateExperience);
             candidateExperience.Candidates = await GetCandidate(candidateExperience.IdCandidate);
